@@ -1,67 +1,120 @@
-# dbt Analytics Engineering Assessment
+cat > /workspaces/dbt_interview/README.md << 'EOF'
+# dbt Interview Project — Salesforce CRM Dimensional Model
+**Saravan Subramaniam | April 2026**
+Built with assistance from Claude and GitHub Copilot for accelerated development and code review.
 
-This project evaluates your dbt and SQL skills using an embedded [DuckDB](https://duckdb.org/) database with sample Salesforce CRM data. No cloud accounts or credentials needed.
+## Overview
+A production-grade dimensional model built with dbt on top of Salesforce CRM data using DuckDB. Demonstrates comprehensive dbt engineering practices across all layers — staging, intermediate, and marts.
 
-## Getting Started
-
+## Quick Start
 This project requires [Dev Containers](https://containers.dev/).
 
 1. Clone the repository
-2. Open it in VS Code with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed
-3. When prompted, click **Reopen in Container** (or run the command manually via `Ctrl+Shift+P` → "Dev Containers: Reopen in Container")
-
-The devcontainer builds a Docker image and installs all dependencies automatically. Once inside, verify:
+2. Open in VS Code with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed
+3. Click **Reopen in Container** when prompted
+4. Once inside the container:
 
 ```bash
 cd transformation
-dbt run     # should build all 14 staging views successfully
+dbt deps        # install packages (dbt_utils, dbt_date)
+dbt build       # builds all 28 models + runs 97 tests
 ```
 
-## What's Provided
+**Expected result: `PASS=129, ERROR=0`**
 
-- **14 staging models** in `models/staging/` — views on raw Salesforce data (accounts, opportunities, leads, cases, contacts, users, campaigns, products, etc.)
-- **Source definition** in `models/staging/_src__salesforce.yml`
-- **Pre-configured schemas** in `dbt_project.yml`: `staging` (views), `intermediate` (tables), `marts` (tables)
-- **Packages**: `dbt_utils`, `dbt_date`, `codegen`
+## View Documentation
+```bash
+cd transformation
+dbt docs serve --port 8080
+# Open: http://localhost:8080
+```
+Full interactive DAG with lineage from raw Salesforce data through to PowerBI exposures.
 
-## Your Task
+## Architecture
+Raw Salesforce Data (DuckDB)
+↓
+Staging Layer (14 views)      — column renames, no logic
+↓
+Intermediate Layer (3 tables) — business logic, joins, window functions
+↓
+Marts Layer (11 models)       — star schema, BI ready
+↓
+PowerBI Dashboards (2 exposures)
+## What's Built
 
-**This is a technical skills demonstration.** The goal is to showcase as many dbt features and best practices as you can. We will **not** evaluate whether the data in your models makes business sense — we are looking at how you use dbt as a tool.
+### Models (28 Total)
+| Layer | Count | Models |
+|---|---|---|
+| Staging | 14 | stg_salesforce__* (provided, views) |
+| Intermediate | 3 | int_opportunities_enriched, int_accounts_enriched, int_leads_converted |
+| Dimensions | 6 | dim_accounts, dim_users, dim_contacts, dim_campaigns, dim_products, dim_date |
+| Facts | 5 | fct_opportunities (incremental), fct_cases, fct_leads, fct_opportunity_line_items (M:M bridge), fct_opportunities_summary |
+| Snapshot | 1 | snap_accounts (SCD Type 2) |
 
-Using the staging models as input, build a dimensional model. The more dbt capabilities you demonstrate, the better.
+### Tests (97 Total — All Passing)
+- **17** unique PK tests
+- **50** not_null tests
+- **15** accepted_values tests
+- **10+** relationship / FK integrity tests
+- **2** composite key tests (dbt_utils.unique_combination_of_columns)
+- **1** singular business rule test (amount > 0)
 
-### Minimum Expected
+### Seeds (3)
+- `opportunity_stages` — pipeline stage sequence and outcomes
+- `case_statuses` — support case status lookup
+- `employee_departments` — org department reference
 
-- Dimension and fact models in `models/marts/`
-- dbt tests in YAML schema files
-- Proper use of `{{ ref() }}` and materializations
+## dbt Features Demonstrated
+| Feature | Implementation |
+|---|---|
+| Materializations (view, table, incremental) | staging=view, intermediate=table, fct_opportunities=incremental |
+| Snapshot SCD Type 2 | snap_accounts — tracks industry, rating, SLA, active status |
+| Custom macro | macros/safe_divide.sql — null-safe division |
+| generate_surrogate_key | All dim_ and fct_ models |
+| dbt_date package | dim_date — 50-column date spine |
+| Composite key tests | stg_opportunity_history, stg_case_history_2 |
+| Jinja loops | fct_opportunities_summary — dynamic column selection |
+| Tags | staging / intermediate / marts / daily |
+| Exposures | 2 PowerBI dashboards with full DAG lineage |
+| store_failures | Key PK test — failures persisted to DB |
+| Window functions | ROW_NUMBER, LAG in int_opportunities_enriched |
+| persist_docs | Model + column descriptions pushed to DuckDB |
+| Doc blocks | models/docs.md — 600+ lines |
 
-### What Will Impress Us
+## Project Structure
+transformation/
+├── models/
+│   ├── staging/          # 14 views — raw Salesforce data
+│   │   └── _models.yml   # tests + descriptions
+│   ├── intermediate/     # 3 tables — business logic + window functions
+│   │   └── _models.yml
+│   ├── marts/            # 6 dims + 5 facts — BI ready star schema
+│   │   └── _models.yml   # FK tests, grain docs, meta tags
+│   ├── docs.md           # 600+ line design documentation
+│   └── exposures.yml     # 2 PowerBI dashboard declarations
+├── macros/
+│   └── safe_divide.sql   # custom Jinja macro
+├── seeds/                # 3 reference CSV datasets
+├── snapshots/
+│   └── snap_accounts.sql # SCD Type 2
+├── tests/
+│   └── assert_opportunities_amount_positive.sql
+└── transformation/
+└── target/           # pre-generated dbt docs site
+└── index.html    # open via dbt docs serve
 
-The list below is not exhaustive — use your experience to decide what's appropriate:
+## Design Decisions
+Full architecture documentation in `transformation/models/docs.md` covering:
+- Star schema design and dimensional modeling rationale
+- Incremental materialization strategy for fct_opportunities
+- SCD Type 2 approach for account change tracking
+- Many-to-many bridge pattern for opportunity line items
+- LEFT JOIN strategy to preserve all opportunities
+- Surrogate key generation via dbt_utils
+- FK relationship test strategy including nullable fields
 
-- **Project structure** — clear layering (staging → intermediate → marts), consistent naming conventions (`dim_`, `fct_`, `int_` prefixes), logical file organization
-- **SQL style** — CTE-based queries (no nested subqueries), meaningful CTE names, consistent column ordering
-- **Schema YAML files** — model and column descriptions, tests co-located with models
-- **Testing** — primary key tests (unique + not_null), referential integrity between facts and dimensions, accepted_values for enums, composite key tests
-- **Materializations** — appropriate choice per layer, understanding of when to use views vs tables
-- **dbt packages** — `dbt_utils` macros (e.g., `generate_surrogate_key`, `unique_combination_of_columns`), `dbt_date` for date dimensions
-- **Custom macros** — reusable Jinja logic where it reduces repetition
-- **Tags** — organizing models for selective runs
-- **Seeds** — static lookup data where useful
-- **Snapshots** — SCD Type 2 tracking (timestamp or check strategy)
-- **Incremental models** — if you see a good use case for it
-- **Window functions** — ROW_NUMBER, LAG/LEAD, running totals
-- **Jinja** — loops, conditionals, dynamic SQL generation
-- **Documentation** — `persist_docs`, doc blocks, or a brief design rationale
+## Build Verification
 
-## Interview Format
+dbt build → PASS=129, WARN=0, ERROR=0, SKIP=0, NO-OP=2
 
-You will present your solution in a live screen-sharing session. Be prepared to:
-
-- Walk through your project and explain your design decisions
-- Demonstrate running `dbt build` and show passing tests
-- Discuss trade-offs and alternative approaches
-- Answer follow-up questions about dbt concepts and patterns
-
-Good luck!
+- NO-OP=2: incremental model had no new rows on this run (expected behaviour)
