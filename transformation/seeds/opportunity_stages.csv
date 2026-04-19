@@ -1,0 +1,11 @@
+stage_name,stage_sequence,is_closed,is_won,description
+Prospecting,1,false,false,Initial lead identification and qualification
+Qualification,2,false,false,Discovery call and needs analysis
+Needs Analysis,3,false,false,Detailed customer needs assessment
+Value Proposition,4,false,false,Solution design and proposal prep
+Id. Decision Makers,5,false,false,Identify and engage with stakeholders
+Perception Analysis,6,false,false,Address customer concerns and objections
+Proposal/Price Quote,7,false,false,Formal proposal and pricing presented
+Negotiation/Review,8,false,false,Contract negotiation and legal review
+Closed Won,9,true,true,Deal closed and won successfully
+Closed Lost,10,true,false,Deal closed and lost to competitor or customer

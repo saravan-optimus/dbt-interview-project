@@ -29,10 +29,5 @@
             }
         }
     },
-    "onCreateCommand": [
-        "/bin/bash",
-        "-i",
-        "-c",
-        "chmod +x .devcontainer/onCreateCommand.sh && .devcontainer/onCreateCommand.sh"
-    ]
+    "onCreateCommand": "echo setup skipped"
 }

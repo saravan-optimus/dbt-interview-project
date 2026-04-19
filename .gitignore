@@ -153,3 +153,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+dbt_learn_browse.duckdb
+PROJECT_PROGRESS.md

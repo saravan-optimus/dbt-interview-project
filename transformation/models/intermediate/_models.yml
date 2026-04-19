@@ -1,0 +1,200 @@
+version: 2
+
+models:
+  - name: int_opportunities_enriched
+    description: "Intermediate layer enriching opportunities with account, user, and campaign context. Grain: 1 row per opportunity (matches stg_opportunities grain)."
+    meta:
+      owner: Sales Analytics
+      layer: intermediate
+    columns:
+      - name: opportunity_id
+        description: "Primary key. Opportunity identifier."
+        data_tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: "Foreign key to Account. Account this opportunity belongs to."
+      - name: account_name
+        description: "Denormalized. Name of the account."
+      - name: account_industry
+        description: "Denormalized. Industry of the account."
+      - name: account_rating
+        description: "Denormalized. Account rating (Hot, Warm, Cold)."
+      - name: account_annual_revenue
+        description: "Denormalized. Annual revenue of the account."
+      - name: account_employees
+        description: "Denormalized. Number of employees at the account."
+      - name: account_country
+        description: "Denormalized. Billing country of the account."
+      - name: account_owner_id
+        description: "Denormalized. Account owner (may differ from opportunity owner)."
+      - name: owner_id
+        description: "Foreign key to User. Sales rep who owns this opportunity."
+      - name: owner_first_name
+        description: "Denormalized. First name of the opportunity owner."
+      - name: owner_last_name
+        description: "Denormalized. Last name of the opportunity owner."
+      - name: owner_email
+        description: "Denormalized. Email of the opportunity owner."
+      - name: owner_department
+        description: "Denormalized. Department of the opportunity owner."
+      - name: owner_title
+        description: "Denormalized. Job title of the opportunity owner."
+      - name: owner_is_active
+        description: "Denormalized. Whether the opportunity owner is an active user."
+      - name: owner_role_id
+        description: "Foreign key to User Role. Role hierarchy of opportunity owner."
+      - name: owner_manager_id
+        description: "Denormalized. Manager of the opportunity owner (optional)."
+      - name: campaign_id
+        description: "Foreign key to Campaign. Campaign this opportunity is associated with (optional)."
+      - name: campaign_name
+        description: "Denormalized. Name of the campaign (optional)."
+      - name: campaign_type
+        description: "Denormalized. Type of campaign (Advertisement, Conference, Trade Show, Web) (optional)."
+      - name: campaign_status
+        description: "Denormalized. Status of the campaign (Planned, In Progress, Completed, Aborted) (optional)."
+      - name: opportunity_name
+        description: "Opportunity name/title."
+      - name: stagename
+        description: "Current pipeline stage."
+      - name: amount
+        description: "Opportunity value in USD."
+      - name: probability
+        description: "Win probability (0-100)."
+      - name: expectedrevenue
+        description: "Expected revenue = amount × probability / 100."
+      - name: isclosed
+        description: "Whether opportunity is closed."
+      - name: iswon
+        description: "Whether opportunity was won."
+      - name: closedate
+        description: "Expected or actual close date."
+      - name: createddate
+        description: "Created date."
+      - name: lastmodifieddate
+        description: "Last modified date."
+      - name: contact_id
+        description: "Foreign key to Contact. Primary contact for this opportunity (optional)."
+
+  - name: int_accounts_enriched
+    description: "Intermediate layer enriching accounts with parent account and owner context. Grain: 1 row per account."
+    meta:
+      owner: Sales Analytics
+      layer: intermediate
+    columns:
+      - name: account_id
+        description: "Primary key. Account identifier."
+        data_tests:
+          - unique
+          - not_null
+      - name: parent_account_id
+        description: "Foreign key to Account (self-referencing). Parent account if this is a subsidiary (optional)."
+      - name: parent_account_name
+        description: "Denormalized. Name of parent account (optional)."
+      - name: is_subsidiary
+        description: "Derived. Whether this account has a parent (Boolean)."
+      - name: owner_id
+        description: "Foreign key to User. Account owner."
+      - name: owner_full_name
+        description: "Denormalized. Full name of account owner."
+      - name: owner_email
+        description: "Denormalized. Email of account owner."
+      - name: owner_department
+        description: "Denormalized. Department of account owner."
+      - name: owner_is_active
+        description: "Denormalized. Whether account owner is active."
+      - name: account_name
+        description: "Company name."
+      - name: account_type
+        description: "Account type (Customer, Prospect, Partner)."
+      - name: industry
+        description: "Industry classification."
+      - name: rating
+        description: "Account rating (Hot, Warm, Cold)."
+      - name: annual_revenue
+        description: "Annual revenue in USD."
+      - name: number_of_employees
+        description: "Number of employees."
+      - name: ownership
+        description: "Company ownership type (Public, Private)."
+      - name: billing_city
+        description: "City for billing address."
+      - name: billing_state
+        description: "State for billing address."
+      - name: billing_country
+        description: "Country for billing address."
+      - name: phone
+        description: "Company phone."
+      - name: website
+        description: "Company website."
+      - name: account_source
+        description: "How this account was sourced."
+      - name: customer_priority
+        description: "Customer priority classification."
+      - name: sla_tier
+        description: "SLA tier for this account."
+      - name: is_active
+        description: "Whether account is active."
+      - name: number_of_locations
+        description: "Number of office locations."
+      - name: upsell_opportunity
+        description: "Flag indicating upsell potential."
+      - name: company_size_band
+        description: "Derived. Size band (Small: 1-100, Mid: 101-1000, Enterprise: 1001+)."
+      - name: revenue_band
+        description: "Derived. Revenue band (Low: <1M, Mid: 1M-10M, High: >10M)."
+      - name: created_date
+        description: "Created date."
+      - name: last_modified_date
+        description: "Last modified date."
+      - name: last_activity_date
+        description: "Last activity date."
+      - name: is_deleted
+        description: "Whether account is marked as deleted."
+
+  - name: int_leads_converted
+    description: "Intermediate layer with converted lead details (many-to-one mapping: converted leads -> account/contact/opportunity). Grain: 1 row per converted lead."
+    meta:
+      owner: Sales Analytics
+      layer: intermediate
+    columns:
+      - name: lead_id
+        description: "Primary key. Lead identifier."
+        data_tests:
+          - unique
+          - not_null
+      - name: is_converted
+        description: "Derived. Always TRUE for this table (only converted leads)."
+      - name: converted_date
+        description: "Date/time when lead was converted."
+      - name: converted_account_id
+        description: "Foreign key to Account. Account created from this lead conversion (nullable)."
+      - name: converted_account_name
+        description: "Denormalized. Name of converted account (nullable)."
+      - name: converted_contact_id
+        description: "Foreign key to Contact. Contact created from this lead conversion (nullable)."
+      - name: converted_contact_name
+        description: "Denormalized. Name of converted contact (nullable)."
+      - name: converted_opportunity_id
+        description: "Foreign key to Opportunity. Opportunity created from this lead conversion (nullable)."
+      - name: converted_opportunity_name
+        description: "Denormalized. Name of converted opportunity (nullable)."
+      - name: days_to_conversion
+        description: "Derived. Days from lead creation to conversion."
+      - name: lead_firstname
+        description: "Lead first name."
+      - name: lead_lastname
+        description: "Lead last name."
+      - name: lead_email
+        description: "Lead email address."
+      - name: lead_company
+        description: "Company name from lead."
+      - name: lead_source
+        description: "Lead source (Web, Event, Referral, Employee Referral)."
+      - name: lead_status
+        description: "Status at time of conversion (Qualified)."
+      - name: owner_id
+        description: "Foreign key to User. Lead owner at time of conversion."
+      - name: created_date
+        description: "Original lead creation date."

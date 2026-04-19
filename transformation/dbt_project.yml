@@ -23,15 +23,31 @@ clean-targets:
 models:
   dbt_interview:
     +database: dbt
-    intermediate:
-      +materialized: table
-      +schema: intermediate
-    marts:
-      +schema: marts
-      +materialized: table
+    +persist_docs:
+      relation: true
+      columns: true
     staging:
       +schema: staging
       +materialized: view
+      +tags: ['staging', 'raw']
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+      +tags: ['intermediate', 'daily']
+    marts:
+      +schema: marts
+      +materialized: table
+      +tags: ['marts', 'daily']
+
+seeds:
+  dbt_interview:
+    +database: dbt
+    +schema: seeds
+
+snapshots:
+  dbt_interview:
+    +database: dbt
+    +schema: snapshots
 
 vars:
   "dbt_date:time_zone": "Europe/Berlin"

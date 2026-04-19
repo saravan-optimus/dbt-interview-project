@@ -1,0 +1,11 @@
+
+    
+    
+    truncate table "dbt"."seeds"."case_statuses";
+    -- dbt seed --
+    
+          COPY "dbt"."seeds"."case_statuses" FROM '/workspaces/dbt_interview/transformation/seeds/case_statuses.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        
+
+;
+  

@@ -1,0 +1,453 @@
+version: 2
+
+models:
+  - name: stg_salesforce__opportunity
+    description: "Staging layer for Salesforce Opportunity records. Grain: 1 row per opportunity."
+    meta:
+      owner: Sales Analytics
+    columns:
+      - name: opportunity_id
+        description: "Primary key. Unique identifier for the opportunity from Salesforce."
+        data_tests:
+          - unique:
+              config:
+                store_failures: true
+          - not_null
+      - name: accountid
+        description: "Foreign key to Account. Links opportunity to the associated company."
+      - name: ownerid
+        description: "Foreign key to User. Sales rep who owns this opportunity."
+      - name: contactid
+        description: "Foreign key to Contact. Primary contact for this opportunity (optional)."
+      - name: campaignid
+        description: "Foreign key to Campaign. Marketing campaign associated with this opportunity (optional)."
+      - name: name
+        description: "Opportunity name/title."
+        data_tests:
+          - not_null
+      - name: stagename
+        description: "Current pipeline stage (e.g., Prospecting, Qualification, Closed Won, Closed Lost)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Prospecting', 'Qualification', 'Needs Analysis', 'Value Proposition', 
+                        'Id. Decision Makers', 'Perception Analysis', 'Proposal/Price Quote', 
+                        'Negotiation/Review', 'Closed Won', 'Closed Lost']
+      - name: amount
+        description: "Opportunity value in USD."
+      - name: probability
+        description: "Win probability (0-100)."
+      - name: closedate
+        description: "Expected or actual close date."
+      - name: isclosed
+        description: "Whether opportunity is closed (True = closed)."
+      - name: iswon
+        description: "Whether opportunity was won (True = won, False = lost or open)."
+      - name: createddate
+        description: "Timestamp when opportunity was created in Salesforce."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__account
+    description: "Staging layer for Salesforce Account records (companies). Grain: 1 row per account."
+    meta:
+      owner: Sales Analytics
+    columns:
+      - name: account_id
+        description: "Primary key. Unique identifier for the account from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Company name."
+        data_tests:
+          - not_null
+      - name: type
+        description: "Account type (e.g., Customer, Prospect, Partner)."
+      - name: ownerid
+        description: "Foreign key to User. Account owner/manager."
+      - name: parentid
+        description: "Foreign key to Account. Parent account if this is a subsidiary (optional)."
+      - name: industry
+        description: "Industry classification (e.g., Technology, Finance, Healthcare)."
+      - name: rating
+        description: "Account rating (e.g., Hot, Warm, Cold)."
+      - name: annualrevenue
+        description: "Annual revenue of the account in USD."
+      - name: numberofemployees
+        description: "Number of employees at the company."
+      - name: billingcountry
+        description: "Country for billing address."
+      - name: billingcity
+        description: "City for billing address."
+      - name: billingstate
+        description: "State/Province for billing address."
+      - name: website
+        description: "Company website URL."
+      - name: sla__c
+        description: "Custom field. SLA tier for the account."
+      - name: active__c
+        description: "Custom field. Whether account is active (Boolean)."
+      - name: createddate
+        description: "Timestamp when account was created in Salesforce."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__contact
+    description: "Staging layer for Salesforce Contact records (people). Grain: 1 row per contact."
+    meta:
+      owner: Sales Analytics
+    columns:
+      - name: contact_id
+        description: "Primary key. Unique identifier for the contact from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: accountid
+        description: "Foreign key to Account. Company this contact works for."
+      - name: firstname
+        description: "Contact first name."
+      - name: lastname
+        description: "Contact last name."
+        data_tests:
+          - not_null
+      - name: email
+        description: "Contact email address."
+      - name: phone
+        description: "Contact phone number."
+      - name: title
+        description: "Job title at the company."
+      - name: department
+        description: "Department at the company."
+      - name: ownerid
+        description: "Foreign key to User. Contact owner."
+      - name: leadsource
+        description: "How this contact was sourced (e.g., Web, Event, Referral)."
+      - name: createddate
+        description: "Timestamp when contact was created in Salesforce."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__user
+    description: "Staging layer for Salesforce User records (internal sales reps). Grain: 1 row per user."
+    meta:
+      owner: Sales Analytics
+    columns:
+      - name: user_id
+        description: "Primary key. Unique identifier for the user from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: firstname
+        description: "User first name."
+      - name: lastname
+        description: "User last name."
+        data_tests:
+          - not_null
+      - name: email
+        description: "User email address."
+        data_tests:
+          - not_null
+      - name: title
+        description: "Job title."
+      - name: department
+        description: "Department."
+      - name: userroleid
+        description: "Foreign key to User Role. Role hierarchy entry."
+      - name: managerid
+        description: "Foreign key to User. Direct manager (optional)."
+      - name: isactive
+        description: "Whether user is active."
+      - name: createddate
+        description: "Timestamp when user was created."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__lead
+    description: "Staging layer for Salesforce Lead records (pre-conversion prospects). Grain: 1 row per lead."
+    meta:
+      owner: Sales Analytics
+    columns:
+      - name: lead_id
+        description: "Primary key. Unique identifier for the lead from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: firstname
+        description: "Lead first name."
+      - name: lastname
+        description: "Lead last name."
+        data_tests:
+          - not_null
+      - name: company
+        description: "Company name."
+      - name: email
+        description: "Lead email address."
+      - name: phone
+        description: "Lead phone number."
+      - name: ownerid
+        description: "Foreign key to User. Lead owner/sales rep."
+      - name: campaignid
+        description: "Foreign key to Campaign. Campaign this lead came from (optional)."
+      - name: leadsource
+        description: "Lead source (e.g., Web, Event, Referral, Employee Referral)."
+      - name: status
+        description: "Lead status (Open, Contacted, Qualified, Unqualified, Nurturing, Converted)."
+        data_tests:
+          - not_null
+      - name: isconverted
+        description: "Whether lead has been converted to Contact/Account."
+      - name: converteddate
+        description: "Date/time when lead was converted (nullable)."
+      - name: convertedaccountid
+        description: "Foreign key to Account. Account created from conversion (nullable)."
+      - name: convertedcontactid
+        description: "Foreign key to Contact. Contact created from conversion (nullable)."
+      - name: convertedopportunityid
+        description: "Foreign key to Opportunity. Opportunity created from conversion (nullable)."
+      - name: createddate
+        description: "Timestamp when lead was created in Salesforce."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__case
+    description: "Staging layer for Salesforce Case records (support tickets). Grain: 1 row per case."
+    meta:
+      owner: Support Analytics
+    columns:
+      - name: case_id
+        description: "Primary key. Unique identifier for the case from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: accountid
+        description: "Foreign key to Account. Company that raised this case."
+      - name: contactid
+        description: "Foreign key to Contact. Contact who created the case."
+      - name: ownerid
+        description: "Foreign key to User. Support agent assigned to this case."
+      - name: casenumber
+        description: "Human-readable case number for support reference."
+      - name: subject
+        description: "Case subject/summary."
+      - name: type
+        description: "Case type (e.g., Question, Problem, Feature Request)."
+      - name: status
+        description: "Case status (New, In Progress, Escalated, Closed, On Hold)."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['New', 'In Progress', 'Escalated', 'Closed', 'On Hold']
+      - name: priority
+        description: "Priority level (Low, Medium, High, Urgent)."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Low', 'Medium', 'High', 'Urgent']
+      - name: isclosed
+        description: "Whether case is closed."
+      - name: closeddate
+        description: "Date/time when case was closed (nullable)."
+      - name: createddate
+        description: "Timestamp when case was created in Salesforce."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__campaign
+    description: "Staging layer for Salesforce Campaign records (marketing campaigns). Grain: 1 row per campaign."
+    meta:
+      owner: Marketing Analytics
+    columns:
+      - name: campaign_id
+        description: "Primary key. Unique identifier for the campaign from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Campaign name."
+        data_tests:
+          - not_null
+      - name: type
+        description: "Campaign type (e.g., Advertisement, Conference, Trade Show, Web)."
+      - name: status
+        description: "Campaign status (Planned, In Progress, Completed, Aborted)."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Planned', 'In Progress', 'Completed', 'Aborted']
+      - name: startdate
+        description: "Campaign start date."
+      - name: enddate
+        description: "Campaign end date."
+      - name: budgetedcost
+        description: "Budgeted cost in USD."
+      - name: actualcost
+        description: "Actual cost spent in USD."
+      - name: expectedrevenue
+        description: "Expected revenue from campaign."
+      - name: createddate
+        description: "Timestamp when campaign was created."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__product_2
+    description: "Staging layer for Salesforce Product records. Grain: 1 row per product."
+    meta:
+      owner: Product Analytics
+    columns:
+      - name: product_id
+        description: "Primary key. Unique identifier for the product from Salesforce."
+        data_tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Product name."
+        data_tests:
+          - not_null
+      - name: productcode
+        description: "SKU or internal product code."
+      - name: description
+        description: "Product description."
+      - name: family
+        description: "Product family/category."
+      - name: isactive
+        description: "Whether product is active for sale."
+      - name: createddate
+        description: "Timestamp when product was created."
+      - name: lastmodifieddate
+        description: "Timestamp of last modification."
+
+  - name: stg_salesforce__pricebook_entry
+    description: "Staging layer for Salesforce Pricebook Entry records (product + pricing). Grain: 1 row per product-pricebook combination."
+    meta:
+      owner: Product Analytics
+    columns:
+      - name: pricebook_entry_id
+        description: "Primary key. Unique identifier for the pricebook entry."
+        data_tests:
+          - unique
+          - not_null
+      - name: pricebook2id
+        description: "Foreign key to Pricebook. Which pricebook this entry belongs to."
+      - name: product2id
+        description: "Foreign key to Product. The product in this entry."
+      - name: unitprice
+        description: "Unit price for this product in USD."
+      - name: usestandard
+        description: "Whether to use standard pricing."
+
+  - name: stg_salesforce__opportunity_history
+    description: "Staging layer for Salesforce Opportunity History records (stage change audit log). Grain: 1 row per (opportunityid, createddate) combination."
+    meta:
+      owner: Sales Analytics
+      grain: one row per opportunity stage change event
+    columns:
+      - name: opportunity_history_id
+        description: "Unique identifier for this history record."
+        data_tests:
+          - unique
+          - not_null
+      - name: opportunityid
+        description: "Opportunity ID (part of composite grain)."
+        data_tests:
+          - not_null
+      - name: createddate
+        description: "Timestamp when this stage change occurred (part of composite grain)."
+        data_tests:
+          - not_null
+      - name: stagename
+        description: "The stage name at the time of this change."
+      - name: amount
+        description: "The amount at the time of this stage change."
+      - name: probability
+        description: "The probability at the time of this stage change."
+      - name: expectedrevenue
+        description: "Expected revenue at the time of this change."
+
+  - name: stg_salesforce__case_history_2
+    description: "Staging layer for Salesforce Case History records (case field change audit log). Grain: 1 row per (caseid, lastmodifieddate) combination."
+    meta:
+      owner: Support Analytics
+      grain: one row per case field change event
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - caseid
+              - lastmodifieddate
+    columns:
+      - name: case_history_id
+        description: "Unique identifier for this history record."
+        data_tests:
+          - unique
+          - not_null
+      - name: caseid
+        description: "Case ID (part of composite grain)."
+        data_tests:
+          - not_null
+      - name: lastmodifieddate
+        description: "Last modification date (part of composite grain)."
+        data_tests:
+          - not_null
+      - name: field
+        description: "Field that was changed (e.g., status, priority)."
+      - name: oldvalue
+        description: "Previous field value."
+      - name: newvalue
+        description: "New field value."
+      - name: createddate
+        description: "Timestamp when this field change occurred."
+
+  - name: stg_salesforce__user_role
+    description: "Staging layer for Salesforce User Role records (role hierarchy). Grain: 1 row per role."
+    meta:
+      owner: Sales Analytics
+    columns:
+      - name: user_role_id
+        description: "Primary key. Unique identifier for the role."
+        data_tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Role name (e.g., VP of Sales, Account Executive)."
+      - name: parentroleid
+        description: "Foreign key to User Role. Parent role in hierarchy (nullable)."
+      - name: rollupDescription
+        description: "Role hierarchy level or description."
+
+  - name: stg_salesforce__record_type
+    description: "Staging layer for Salesforce Record Type records (metadata). Grain: 1 row per record type."
+    meta:
+      owner: Data Platform
+    columns:
+      - name: record_type_id
+        description: "Primary key. Unique identifier for the record type."
+        data_tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Record type name (e.g., Customer, Prospect)."
+      - name: sobjecttype
+        description: "Object this record type applies to (e.g., Account, Opportunity)."
+
+  - name: stg_salesforce__solution
+    description: "Staging layer for Salesforce Solution records (knowledge base articles). Grain: 1 row per solution."
+    meta:
+      owner: Support Analytics
+    columns:
+      - name: solution_id
+        description: "Primary key. Unique identifier for the solution."
+        data_tests:
+          - unique
+          - not_null
+      - name: solutiontitle
+        description: "Solution title."
+      - name: solutionbody
+        description: "Solution content/body text."
+      - name: isreviewed
+        description: "Whether solution has been reviewed."
+      - name: ispublished
+        description: "Whether solution is published."
+      - name: replycount
+        description: "Number of replies/comments on solution."

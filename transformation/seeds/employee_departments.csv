@@ -1,0 +1,11 @@
+department_id,department_name,cost_center,region
+1,Enterprise Sales,CC-100,North America
+2,Mid-Market Sales,CC-101,North America
+3,SMB Sales,CC-102,North America
+4,EMEA Sales,CC-200,Europe
+5,APAC Sales,CC-300,Asia-Pacific
+6,Customer Success,CC-400,Global
+7,Support,CC-401,Global
+8,Product,CC-500,Global
+9,Engineering,CC-501,Global
+10,Marketing,CC-600,Global

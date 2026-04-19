@@ -1,0 +1,34 @@
+version: 2
+
+exposures:
+
+  - name: sales_pipeline_dashboard
+    type: dashboard
+    maturity: high
+    url: https://app.powerbi.com/reports/sales-pipeline
+    description: >
+      PowerBI dashboard tracking sales pipeline health,
+      win rates by region, and rep performance metrics.
+      Refreshed daily from fct_opportunities.
+    owner:
+      name: Saravan
+      email: saravan@company.com
+    depends_on:
+      - ref('fct_opportunities')
+      - ref('dim_accounts')
+      - ref('dim_users')
+      - ref('dim_campaigns')
+
+  - name: support_operations_report
+    type: dashboard
+    maturity: medium
+    description: >
+      PowerBI report tracking case resolution times,
+      escalation rates, and support team workload.
+    owner:
+      name: Saravan
+      email: saravan@company.com
+    depends_on:
+      - ref('fct_cases')
+      - ref('dim_contacts')
+      - ref('dim_accounts')

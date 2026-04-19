@@ -1,0 +1,43 @@
+version: 2
+
+snapshots:
+  - name: snap_accounts
+    description: "Snapshot of Account dimension (SCD Type 2). Tracks changes to key account attributes (industry, rating, SLA tier, active status) over time. Grain: 1 row per account per valid period."
+    meta:
+      owner: Sales Analytics
+      scd_type: 2
+    columns:
+      - name: account_id
+        description: "Salesforce account ID (natural key). Composite PK with dbt_valid_from."
+      - name: account_name
+        description: "Account name at time of snapshot."
+      - name: industry
+        description: "Industry classification at time of snapshot. TRACKED COLUMN (triggers new version)."
+      - name: rating
+        description: "Account rating at time of snapshot. TRACKED COLUMN (triggers new version)."
+      - name: sla__c
+        description: "Custom SLA tier field. TRACKED COLUMN (triggers new version)."
+      - name: active__c
+        description: "Custom active status field. TRACKED COLUMN (triggers new version)."
+      - name: billing_country
+        description: "Billing country at time of snapshot."
+      - name: numberofemployees
+        description: "Employee count at time of snapshot."
+      - name: annualrevenue
+        description: "Annual revenue at time of snapshot."
+      - name: parent_id
+        description: "Parent account ID at time of snapshot."
+      - name: owner_id
+        description: "Account owner ID at time of snapshot."
+      - name: created_date
+        description: "Account created date."
+      - name: last_modified_date
+        description: "Timestamp of last record modification from source system."
+      - name: dbt_scd_id
+        description: "Unique identifier for each row version (dbt auto-generated)."
+      - name: dbt_updated_at
+        description: "Timestamp when snapshot was taken (dbt auto-generated)."
+      - name: dbt_valid_from
+        description: "Start date of this version's validity (dbt auto-generated). Marks when changes were detected."
+      - name: dbt_valid_to
+        description: "End date of this version's validity, NULL if current (dbt auto-generated). Marks when next version began."

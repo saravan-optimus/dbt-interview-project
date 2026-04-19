@@ -1,0 +1,6 @@
+status_name,is_resolved,sla_applicable,description
+New,false,true,Case just opened
+In Progress,false,true,Case being worked on
+Escalated,false,true,Case escalated to senior support
+On Hold,false,true,Case waiting on customer or external dependency
+Closed,true,false,Case resolved and closed
