@@ -1,4 +1,3 @@
-cat > /workspaces/dbt_interview/README.md << 'EOF'
 # dbt Interview Project — Salesforce CRM Dimensional Model
 **Saravan Subramaniam | April 2026**
 Built with assistance from Claude and GitHub Copilot for accelerated development and code review.
