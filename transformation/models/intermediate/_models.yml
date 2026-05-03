@@ -153,8 +153,8 @@ models:
       - name: is_deleted
         description: "Whether account is marked as deleted."
 
-  - name: int_leads_converted
-    description: "Intermediate layer with converted lead details (many-to-one mapping: converted leads -> account/contact/opportunity). Grain: 1 row per converted lead."
+  - name: int_leads_enriched
+    description: "Intermediate layer enriching all leads with owner context and derived conversion metrics. Grain: 1 row per lead (converted and unconverted)."
     meta:
       owner: Sales Analytics
       layer: intermediate
@@ -164,37 +164,71 @@ models:
         data_tests:
           - unique
           - not_null
-      - name: is_converted
-        description: "Derived. Always TRUE for this table (only converted leads)."
-      - name: converted_date
-        description: "Date/time when lead was converted."
+      - name: owner_id
+        description: "Foreign key to User. Lead owner."
+        data_tests:
+          - not_null
       - name: converted_account_id
         description: "Foreign key to Account. Account created from this lead conversion (nullable)."
-      - name: converted_account_name
-        description: "Denormalized. Name of converted account (nullable)."
       - name: converted_contact_id
         description: "Foreign key to Contact. Contact created from this lead conversion (nullable)."
-      - name: converted_contact_name
-        description: "Denormalized. Name of converted contact (nullable)."
       - name: converted_opportunity_id
         description: "Foreign key to Opportunity. Opportunity created from this lead conversion (nullable)."
-      - name: converted_opportunity_name
-        description: "Denormalized. Name of converted opportunity (nullable)."
-      - name: days_to_conversion
-        description: "Derived. Days from lead creation to conversion."
-      - name: lead_firstname
+      - name: first_name
         description: "Lead first name."
-      - name: lead_lastname
+      - name: last_name
         description: "Lead last name."
-      - name: lead_email
-        description: "Lead email address."
-      - name: lead_company
+      - name: full_name
+        description: "Concatenated full name."
+      - name: company
         description: "Company name from lead."
+      - name: title
+        description: "Job title."
+      - name: email
+        description: "Lead email address."
+      - name: industry
+        description: "Industry."
+      - name: rating
+        description: "Lead rating."
       - name: lead_source
         description: "Lead source (Web, Event, Referral, Employee Referral)."
       - name: lead_status
-        description: "Status at time of conversion (Qualified)."
-      - name: owner_id
-        description: "Foreign key to User. Lead owner at time of conversion."
+        description: "Current lead status (Open, Contacted, Qualified, Unqualified, Nurturing, Converted)."
+      - name: annual_revenue
+        description: "Annual revenue from lead."
+      - name: number_of_employees
+        description: "Number of employees."
+      - name: country
+        description: "Country."
+      - name: is_converted
+        description: "Whether lead has been converted."
+      - name: converted_date
+        description: "Date/time when lead was converted (nullable)."
+      - name: days_to_convert
+        description: "Derived. Days from lead creation to conversion (nullable if not converted)."
+      - name: lead_outcome
+        description: "Derived. Outcome classification: Converted, Lost, Open, Deleted."
+      - name: company_size_band
+        description: "Derived. Size band (SMB: <50, Mid-Market: 50-500, Enterprise: 500+)."
+      - name: converted_with_opportunity
+        description: "Derived. Whether lead was converted with an associated opportunity."
+      - name: owner_first_name
+        description: "Denormalized. First name of the lead owner."
+      - name: owner_last_name
+        description: "Denormalized. Last name of the lead owner."
+      - name: owner_full_name
+        description: "Denormalized. Full name of the lead owner."
+      - name: owner_email
+        description: "Denormalized. Email of the lead owner."
+      - name: owner_department
+        description: "Denormalized. Department of the lead owner."
+      - name: owner_is_active
+        description: "Denormalized. Whether the lead owner is an active user."
       - name: created_date
         description: "Original lead creation date."
+      - name: last_modified_date
+        description: "Last modified date."
+      - name: last_activity_date
+        description: "Last activity date."
+      - name: is_deleted
+        description: "Whether lead is marked as deleted."

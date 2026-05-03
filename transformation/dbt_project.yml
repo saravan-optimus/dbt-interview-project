@@ -38,6 +38,10 @@ models:
       +schema: marts
       +materialized: table
       +tags: ['marts', 'daily']
+    reporting:
+      +schema: reporting
+      +materialized: view
+      +tags: ['reporting', 'daily']
 
 seeds:
   dbt_interview:

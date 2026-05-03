@@ -123,7 +123,7 @@ models:
         description: "Product category/family."
 
   - name: dim_users
-    description: "User dimension. Grain: 1 row per Salesforce user. Sales team and support staff profiles."
+    description: "User dimension. Grain: 1 row per Salesforce user. Sales team and support staff profiles enriched with department metadata."
     meta:
       owner: Sales Operations
     columns:
@@ -145,13 +145,19 @@ models:
       - name: email
         description: "Email address."
       - name: department
-        description: "Department."
+        description: "Department name from Salesforce."
+      - name: department_id
+        description: "Department ID from employee_departments seed."
+      - name: cost_center
+        description: "Cost center from employee_departments seed."
+      - name: region
+        description: "Region from employee_departments seed."
 
   # FACT TABLES
   # ===========
 
   - name: fct_opportunities
-    description: "Opportunity fact table. Grain: 1 row per opportunity. Incremental materialization with date-based refresh logic. Core sales pipeline metrics."
+    description: "Opportunity fact table. Grain: 1 row per opportunity. Incremental materialization with date-based refresh logic. Core sales pipeline metrics enriched with seed-based stage metadata."
     meta:
       owner: Sales Analytics
       is_incremental: true
@@ -182,24 +188,26 @@ models:
                 to: ref('dim_users')
                 field: user_id
       - name: stage_name
-        description: "Pipeline stage."
+        description: "Pipeline stage from Salesforce."
         data_tests:
           - not_null
+      - name: stage_sequence
+        description: "Numeric stage order (1-10) from opportunity_stages seed. Enables correct pipeline ordering in BI tools."
       - name: amount
         description: "Opportunity value in USD."
       - name: probability
         description: "Estimated win probability (0-100)."
       - name: is_closed
-        description: "Whether opportunity is closed."
+        description: "Whether opportunity is closed. Source: opportunity_stages seed (not raw Salesforce)."
       - name: is_won
-        description: "Whether opportunity was won."
+        description: "Whether opportunity was won. Source: opportunity_stages seed (not raw Salesforce)."
       - name: opportunity_status
         description: "Derived status: Won/Lost/Open/Overdue."
       - name: deal_size_band
         description: "Derived classification: Small/Medium/Large/Enterprise."
 
   - name: fct_cases
-    description: "Support case fact table. Grain: 1 row per case. Support operations metrics."
+    description: "Support case fact table. Grain: 1 row per case. Support operations metrics enriched with seed-based status metadata."
     meta:
       owner: Support Operations
       grain: one row per case
@@ -229,9 +237,13 @@ models:
                 to: ref('dim_contacts')
                 field: contact_id
       - name: case_status
-        description: "Status of case."
+        description: "Status of case from Salesforce."
       - name: is_closed
         description: "Whether case is closed."
+      - name: is_resolved
+        description: "Whether case is resolved. Source: case_statuses seed."
+      - name: sla_applicable
+        description: "Whether SLA applies to this case. Source: case_statuses seed."
 
   - name: fct_leads
     description: "Lead fact table. Grain: 1 row per lead. Lead conversion metrics and outcomes."
@@ -290,28 +302,3 @@ models:
               arguments:
                 to: ref('dim_accounts')
                 field: account_id
-
-  - name: fct_opportunities_summary
-    description: "Opportunity summary fact table. Grain: 1 row per opportunity. Uses Jinja loop for dynamic column selection. Aggregated metrics for executive reporting."
-    meta:
-      owner: Sales Analytics
-      grain: one row per opportunity
-    columns:
-      - name: opportunity_id
-        description: "Natural key."
-        data_tests:
-          - not_null
-      - name: account_id
-        description: "Foreign key to dim_accounts."
-      - name: owner_id
-        description: "Foreign key to dim_users."
-      - name: opportunity_status
-        description: "Opportunity status."
-      - name: deal_size_band
-        description: "Deal size band."
-      - name: amount
-        description: "Opportunity amount in USD."
-      - name: probability
-        description: "Win probability."
-      - name: days_to_close
-        description: "Days to close."

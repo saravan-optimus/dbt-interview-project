@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_opportunities_summary
+    description: "Pipeline summary aggregated by sales rep and fiscal period. Grain: 1 row per (owner_id, fiscal_year, fiscal_quarter). Built as a view for BI dashboard consumption."
+    meta:
+      owner: Sales Analytics
+      layer: reporting
+      grain: one row per owner per fiscal quarter
+    columns:
+      - name: owner_id
+        description: "Foreign key to dim_users. Sales rep."
+        data_tests:
+          - not_null
+      - name: owner_full_name
+        description: "Denormalized. Full name of the sales rep."
+      - name: fiscal_year
+        description: "Fiscal year."
+        data_tests:
+          - not_null
+      - name: fiscal_quarter
+        description: "Fiscal quarter (1-4)."
+        data_tests:
+          - not_null
+      - name: total_opportunities
+        description: "Count of all opportunities in the period."
+      - name: total_pipeline_value
+        description: "Sum of all opportunity amounts."
+      - name: weighted_pipeline_value
+        description: "Sum of amount × probability / 100 — expected value weighted by win likelihood."
+      - name: avg_probability
+        description: "Average win probability across all opportunities."
+      - name: won_count
+        description: "Count of opportunities closed won."
+      - name: won_revenue
+        description: "Sum of amounts for won opportunities."
+      - name: lost_count
+        description: "Count of opportunities closed lost."
+      - name: open_count
+        description: "Count of opportunities still open."

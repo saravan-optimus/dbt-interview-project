@@ -338,7 +338,7 @@ models:
         description: "Whether to use standard pricing."
 
   - name: stg_salesforce__opportunity_history
-    description: "Staging layer for Salesforce Opportunity History records (stage change audit log). Grain: 1 row per (opportunityid, createddate) combination."
+    description: "Staging layer for Salesforce Opportunity History records (stage change audit log). Grain: 1 row per opportunity_history_id. Note: (opportunityid, createddate) was intended composite grain but source has duplicate timestamps; opportunity_history_id is true unique key."
     meta:
       owner: Sales Analytics
       grain: one row per opportunity stage change event
@@ -349,11 +349,11 @@ models:
           - unique
           - not_null
       - name: opportunityid
-        description: "Opportunity ID (part of composite grain)."
+        description: "Opportunity ID."
         data_tests:
           - not_null
       - name: createddate
-        description: "Timestamp when this stage change occurred (part of composite grain)."
+        description: "Timestamp when this stage change occurred."
         data_tests:
           - not_null
       - name: stagename

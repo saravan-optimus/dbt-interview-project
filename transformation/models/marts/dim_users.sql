@@ -14,6 +14,12 @@ roles as (
 
 ),
 
+employee_departments as (
+
+    select * from {{ ref('employee_departments') }}
+
+),
+
 final as (
 
     select
@@ -27,6 +33,9 @@ final as (
         u.email,
         u.title,
         u.department,
+        ed.department_id,
+        ed.cost_center,
+        ed.region,
         u.division,
         u.companyname           as company_name,
         u.alias,
@@ -44,6 +53,8 @@ final as (
     from users u
     left join roles r
         on u.userroleid = r.user_role_id
+    left join employee_departments ed
+        on upper(trim(u.department)) = upper(trim(ed.department_name))
 
 )
 

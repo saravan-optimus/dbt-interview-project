@@ -37,6 +37,12 @@ users as (
 
 ),
 
+case_statuses as (
+
+    select * from {{ ref('case_statuses') }}
+
+),
+
 final as (
 
     select
@@ -53,6 +59,8 @@ final as (
         c.origin                    as case_origin,
         c.subject,
         c.isclosed                  as is_closed,
+        cs.is_resolved,             -- from seed (source of truth)
+        cs.sla_applicable,          -- from seed (source of truth)
         c.isescalated               as is_escalated,
         c.closeddate                as closed_date,
         c.createddate               as created_date,
@@ -85,6 +93,8 @@ final as (
     left join accounts a    on c.accountid  = a.account_id
     left join contacts ct   on c.contactid  = ct.contact_id
     left join users u       on c.ownerid    = u.user_id
+    left join case_statuses cs
+        on upper(trim(c.status)) = upper(trim(cs.status_name))
 
 )
 

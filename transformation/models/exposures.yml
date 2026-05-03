@@ -9,12 +9,13 @@ exposures:
     description: >
       PowerBI dashboard tracking sales pipeline health,
       win rates by region, and rep performance metrics.
-      Refreshed daily from fct_opportunities.
+      Refreshed daily from fct_opportunities and fct_opportunities_summary.
     owner:
       name: Saravan
       email: saravan@company.com
     depends_on:
       - ref('fct_opportunities')
+      - ref('fct_opportunities_summary')
       - ref('dim_accounts')
       - ref('dim_users')
       - ref('dim_campaigns')

@@ -4,7 +4,7 @@
 
 with leads as (
 
-    select * from {{ ref('int_leads_converted') }}
+    select * from {{ ref('int_leads_enriched') }}
 
 ),
 

@@ -5,6 +5,8 @@ EVALUATION.md
 .open
 .open.wal
 dbt.duckdb.wal
+dbt_readonly.duckdb
+dbt.duckdb
 
 target/
 dbt_packages/
