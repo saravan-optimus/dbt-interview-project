@@ -1,0 +1,370 @@
+table fct_opportunities
+	lineageTag: cdba689c-07c5-45f0-a6ae-61050ef669e9
+
+	measure 'Win Rate' =
+			DIVIDE(
+			    COUNTROWS(FILTER('fct_opportunities', 'fct_opportunities'[is_won] = TRUE())),
+			    COUNTROWS('fct_opportunities'),
+			    0
+			)
+		formatString: 0.00%
+		displayFolder: Key Metrics
+		lineageTag: 4b853f1c-679c-4766-843e-c711d38868dc
+
+	measure 'Total Pipeline Value' = SUM('fct_opportunities'[amount])
+		formatString: $#,##0.00,,M
+		displayFolder: Key Metrics
+		lineageTag: ed7bfb87-c696-4a42-8396-c375b8ffdc4c
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Avg Days to Close' = AVERAGEX(FILTER('fct_opportunities', 'fct_opportunities'[days_to_close] >= 0), 'fct_opportunities'[days_to_close])
+		formatString: 0.0
+		displayFolder: Key Metrics
+		lineageTag: 888c42a1-5527-4ece-b221-97c3dd8242dd
+
+	column opportunity_key
+		dataType: string
+		lineageTag: dec6c025-7685-4249-afda-453eef875ebc
+		summarizeBy: none
+		sourceColumn: opportunity_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column opportunity_id
+		dataType: string
+		lineageTag: 0ba3ba53-6a4f-4d20-ac8f-004b00ef9ded
+		summarizeBy: none
+		sourceColumn: opportunity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: string
+		lineageTag: 137e4347-f3e3-4ea9-b378-2d0a9bb6a811
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_id
+		dataType: string
+		lineageTag: 4b3a9531-d5f7-475e-b3d8-c4e9568e33ad
+		summarizeBy: none
+		sourceColumn: owner_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_id
+		dataType: string
+		lineageTag: 608f2768-d494-4972-aca4-e6b8abd79fcc
+		summarizeBy: none
+		sourceColumn: campaign_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_id
+		dataType: string
+		lineageTag: b6897534-bc9c-43a6-ac4a-256365462e7a
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column opportunity_name
+		dataType: string
+		lineageTag: b8cda39a-c097-44b5-9756-50f5545e847f
+		summarizeBy: none
+		sourceColumn: opportunity_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column opportunity_type
+		dataType: string
+		lineageTag: 4b1d7e0f-fb25-4c18-ac00-86b5598afb69
+		summarizeBy: none
+		sourceColumn: opportunity_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_name
+		dataType: string
+		lineageTag: 6cb66d51-7ade-4085-a7cc-0825e35d1c02
+		summarizeBy: none
+		sourceColumn: stage_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: decimal
+		formatString: 0
+		lineageTag: 14f4c3ae-4c2d-42a3-8509-d72988515289
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column probability
+		dataType: double
+		formatString: 0
+		lineageTag: 1280a96f-aa65-4352-bf44-bfd49664a3ac
+		summarizeBy: sum
+		sourceColumn: probability
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_revenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e5678bd-182a-43e2-b34b-fff8e510d2a4
+		summarizeBy: sum
+		sourceColumn: expected_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column close_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d66fe893-aaf5-4317-a668-87f08a71f764
+		summarizeBy: none
+		sourceColumn: close_date
+
+		variation Variation
+			isDefault
+			relationship: 11016464-aef0-4c51-a0a5-0d823303dbff
+			defaultHierarchy: LocalDateTable_9aec3459-0052-40f2-824c-b2024537ed4f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_closed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b1260eb3-d615-4a0d-b8eb-bac6744911b5
+		summarizeBy: none
+		sourceColumn: is_closed
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_won
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3cd6ef6d-5902-405c-a8fe-e1dace95da0a
+		summarizeBy: none
+		sourceColumn: is_won
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_sequence
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a5e8d6e-e09d-4ebf-9d38-58e988480645
+		summarizeBy: sum
+		sourceColumn: stage_sequence
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_source
+		dataType: string
+		lineageTag: 913dca18-7088-437b-810d-a134eb9f9e6b
+		summarizeBy: none
+		sourceColumn: lead_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column forecast_category
+		dataType: string
+		lineageTag: a2858d30-aeef-4a28-b45d-c757628d890f
+		summarizeBy: none
+		sourceColumn: forecast_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column forecast_category_name
+		dataType: string
+		lineageTag: 8f40e50e-f81a-4c23-8ff6-d68c7c10e776
+		summarizeBy: none
+		sourceColumn: forecast_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_year
+		dataType: int64
+		formatString: 0
+		lineageTag: c6e12f19-4369-4825-a00a-b0d0b47cc4ff
+		summarizeBy: sum
+		sourceColumn: fiscal_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 20771165-c8ac-4b82-810d-aafea46a929b
+		summarizeBy: sum
+		sourceColumn: fiscal_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column opportunity_status
+		dataType: string
+		lineageTag: 8f397108-d00c-45d4-a0d0-b4c72e44b5bc
+		summarizeBy: none
+		sourceColumn: opportunity_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column deal_size_band
+		dataType: string
+		lineageTag: 88e911de-176d-4de4-bfc6-156d35e30604
+		summarizeBy: none
+		sourceColumn: deal_size_band
+
+		annotation SummarizationSetBy = Automatic
+
+	column probability_band
+		dataType: string
+		lineageTag: d24aa3c8-00c3-456a-9653-f6e22b7b0fc2
+		summarizeBy: none
+		sourceColumn: probability_band
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_to_close
+		dataType: int64
+		formatString: 0
+		lineageTag: f532b365-eb2f-40a5-bcd3-770a8c9d3a0b
+		summarizeBy: sum
+		sourceColumn: days_to_close
+
+		annotation SummarizationSetBy = Automatic
+
+	column opportunity_age_days
+		dataType: int64
+		formatString: 0
+		lineageTag: abb1a63c-43ab-4fd3-8346-c16f6ee34339
+		summarizeBy: sum
+		sourceColumn: opportunity_age_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_name
+		dataType: string
+		lineageTag: 8b53b884-281c-493a-813a-089280a7bdb9
+		summarizeBy: none
+		sourceColumn: account_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_industry
+		dataType: string
+		lineageTag: 39f3b085-8399-4bff-a2e2-7820c874fb04
+		summarizeBy: none
+		sourceColumn: account_industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_country
+		dataType: string
+		lineageTag: 18b4bc6c-60da-4294-b267-e8838f71a46c
+		summarizeBy: none
+		sourceColumn: account_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_full_name
+		dataType: string
+		lineageTag: dde8cc9a-67dc-4f63-b103-9d0973a48139
+		summarizeBy: none
+		sourceColumn: owner_full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_department
+		dataType: string
+		lineageTag: cd9bdef9-a71d-4d1c-845f-712d2e72f3fe
+		summarizeBy: none
+		sourceColumn: owner_department
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_name
+		dataType: string
+		lineageTag: 064175bb-9f4f-4dfc-882e-38bda4988116
+		summarizeBy: none
+		sourceColumn: campaign_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_type
+		dataType: string
+		lineageTag: 29bfb1e6-3aa9-474d-a500-46b9fccd6dae
+		summarizeBy: none
+		sourceColumn: campaign_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 15a13afa-0549-4f5c-9603-48b0cd96eb9d
+		summarizeBy: none
+		sourceColumn: created_date
+
+		variation Variation
+			isDefault
+			relationship: 65b90759-2012-47d3-bfc5-c3721b435da7
+			defaultHierarchy: LocalDateTable_8b33e606-960c-4808-90ae-ed07b545cbe8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_modified_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1f61c84b-7fce-44da-8c17-9f4b30adf5a5
+		summarizeBy: none
+		sourceColumn: last_modified_date
+
+		variation Variation
+			isDefault
+			relationship: 925f105b-1fbe-4598-ba29-96896fcb1389
+			defaultHierarchy: LocalDateTable_31fc59a3-28c7-488d-8223-1c002c109aee.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_stage_change_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b56197ba-fc75-4ed3-bb4c-c22efb959d6e
+		summarizeBy: none
+		sourceColumn: last_stage_change_date
+
+		variation Variation
+			isDefault
+			relationship: f416b7a4-54c0-4837-9467-2a730f0a5b7d
+			defaultHierarchy: LocalDateTable_27339e65-a37d-43ac-b5c2-a34c4907880a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_deleted
+		dataType: int64
+		formatString: 0
+		lineageTag: f14659ef-a9c5-4cff-ae81-5f7ee978eec3
+		summarizeBy: sum
+		sourceColumn: is_deleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fct_opportunities = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\dbt-work\dbt_interview\CSv Files\fct_opportunities.csv"),[Delimiter="|", Columns=37, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"opportunity_key", type text}, {"opportunity_id", type text}, {"account_id", type text}, {"owner_id", type text}, {"campaign_id", type text}, {"contact_id", type text}, {"opportunity_name", type text}, {"opportunity_type", type text}, {"stage_name", type text}, {"amount", Currency.Type}, {"probability", type number}, {"expected_revenue", Int64.Type}, {"close_date", type datetime}, {"is_closed", type logical}, {"is_won", type logical}, {"stage_sequence", Int64.Type}, {"lead_source", type text}, {"forecast_category", type text}, {"forecast_category_name", type text}, {"fiscal_year", Int64.Type}, {"fiscal_quarter", Int64.Type}, {"opportunity_status", type text}, {"deal_size_band", type text}, {"probability_band", type text}, {"days_to_close", Int64.Type}, {"opportunity_age_days", Int64.Type}, {"account_name", type text}, {"account_industry", type text}, {"account_country", type text}, {"owner_full_name", type text}, {"owner_department", type text}, {"campaign_name", type text}, {"campaign_type", type text}, {"created_date", type datetime}, {"last_modified_date", type datetime}, {"last_stage_change_date", type datetime}, {"is_deleted", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

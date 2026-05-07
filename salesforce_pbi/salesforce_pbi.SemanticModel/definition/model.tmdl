@@ -1,0 +1,37 @@
+/// Salesforce CRM semantic model built locally as a proof of concept. 
+/// Tables, columns, relationships, and DAX measures generated 
+/// programmatically from dbt schema definitions using LLM + Power BI MCP 
+/// — without manual Power BI Desktop interaction. In a production 
+/// environment this entire workflow can be orchestrated end-to-end: 
+/// Airflow → dbt → LLM + MCP → Power BI Service.
+model Model
+	culture: en-IN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
+
+annotation PBI_QueryOrder = ["dim_accounts","dim_users","fct_opportunities","fct_opportunities_summary"]
+
+ref table dim_accounts
+ref table DateTableTemplate_9b39c45e-717d-4813-85f9-8cd5705c2d93
+ref table LocalDateTable_122690d8-f4fa-4dac-9c24-2a0ca2c89720
+ref table LocalDateTable_138a96bf-e43e-45c5-9143-661f5ddf7908
+ref table dim_users
+ref table LocalDateTable_7761abdf-9ee0-44f5-bc63-0daee85859ba
+ref table LocalDateTable_5dcc7a67-1df0-48a4-ba9c-cef12650c97d
+ref table LocalDateTable_fcd18922-e545-4f4e-a3de-24e2a6b3f5cb
+ref table fct_opportunities
+ref table LocalDateTable_9aec3459-0052-40f2-824c-b2024537ed4f
+ref table LocalDateTable_8b33e606-960c-4808-90ae-ed07b545cbe8
+ref table LocalDateTable_31fc59a3-28c7-488d-8223-1c002c109aee
+ref table fct_opportunities_summary
+ref table LocalDateTable_27339e65-a37d-43ac-b5c2-a34c4907880a
+
+ref cultureInfo en-IN
+

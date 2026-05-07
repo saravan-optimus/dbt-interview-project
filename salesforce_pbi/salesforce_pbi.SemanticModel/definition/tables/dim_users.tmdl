@@ -1,0 +1,253 @@
+table dim_users
+	lineageTag: 1744061c-5ef0-4776-9508-c5103fc92ba6
+
+	column user_key
+		dataType: string
+		lineageTag: 48c5fd0d-48fe-497a-bec1-b70eea3b6951
+		summarizeBy: none
+		sourceColumn: user_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: d1dcae83-87e3-4568-bca5-49b94b554e1f
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_role_id
+		dataType: string
+		lineageTag: e5f403bc-19f3-4ed6-8382-e299168b0297
+		summarizeBy: none
+		sourceColumn: user_role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_id
+		dataType: string
+		lineageTag: fb9bfc4a-2971-4e49-8c86-d5a50d3cc39a
+		summarizeBy: none
+		sourceColumn: manager_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: dfe167a0-bd77-4fd5-b554-3a2de2c6f3ca
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_name
+		dataType: string
+		lineageTag: b1af3870-c14e-4564-a3d3-cb153213bb50
+		summarizeBy: none
+		sourceColumn: last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: 3797616c-c4cc-4107-a742-abaa02f63ae8
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 7748bedb-0845-4685-a3f0-26bafa529457
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column title
+		dataType: string
+		lineageTag: c241975c-ff71-4324-ae9f-fafcc7b20372
+		summarizeBy: none
+		sourceColumn: title
+
+		annotation SummarizationSetBy = Automatic
+
+	column department
+		dataType: string
+		lineageTag: ced84cbf-c942-4b16-9188-45f6761c15f8
+		summarizeBy: none
+		sourceColumn: department
+
+		annotation SummarizationSetBy = Automatic
+
+	column department_id
+		dataType: string
+		lineageTag: 76a12bc3-1576-4df8-838d-4db3cbb0e657
+		summarizeBy: none
+		sourceColumn: department_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_center
+		dataType: string
+		lineageTag: 3e3cd830-b89e-4522-b950-566e4e82ac08
+		summarizeBy: none
+		sourceColumn: cost_center
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 29e6da28-b5b3-4c8d-9230-ccd3ce8c978f
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column division
+		dataType: string
+		lineageTag: 0a9813d6-086a-49dc-9e51-9870e68e1a25
+		summarizeBy: none
+		sourceColumn: division
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_name
+		dataType: string
+		lineageTag: 14d094dd-465f-49f6-a0e5-f29c42f8949d
+		summarizeBy: none
+		sourceColumn: company_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column alias
+		dataType: string
+		lineageTag: aac2f2a0-7702-4da3-a429-ed2788862ea3
+		summarizeBy: none
+		sourceColumn: alias
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: int64
+		formatString: 0
+		lineageTag: 23dd53a1-2531-42e8-859c-63ffd8ddec99
+		summarizeBy: sum
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_type
+		dataType: string
+		lineageTag: 1e26ca10-4ebf-46a8-a16c-b24985a92b3a
+		summarizeBy: none
+		sourceColumn: user_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_sub_type
+		dataType: string
+		lineageTag: 84a2f741-b49f-42a2-ac5f-899e71c125c3
+		summarizeBy: none
+		sourceColumn: user_sub_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column profile_id
+		dataType: string
+		lineageTag: 660f21ec-bbe9-49ff-beaf-e0a42345881c
+		summarizeBy: none
+		sourceColumn: profile_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column forecast_enabled
+		dataType: int64
+		formatString: 0
+		lineageTag: 36840999-66fd-49cf-ae3a-7eabd19c8812
+		summarizeBy: sum
+		sourceColumn: forecast_enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_number
+		dataType: string
+		lineageTag: dc99e905-14f2-48dc-b315-356e803bbd16
+		summarizeBy: none
+		sourceColumn: employee_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_login_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7ff00fc3-ad92-4831-b4b5-ede6eb0bc1d1
+		summarizeBy: none
+		sourceColumn: last_login_date
+
+		variation Variation
+			isDefault
+			relationship: 7bf496f5-f45e-4c1f-9d58-7345513c4ed5
+			defaultHierarchy: LocalDateTable_7761abdf-9ee0-44f5-bc63-0daee85859ba.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a6bef0c3-cf7f-47df-bf48-0145917f48a6
+		summarizeBy: none
+		sourceColumn: created_date
+
+		variation Variation
+			isDefault
+			relationship: e665e7d2-f4f1-463f-9f8b-277afa91ac5d
+			defaultHierarchy: LocalDateTable_5dcc7a67-1df0-48a4-ba9c-cef12650c97d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_modified_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b2fd41cd-b21a-4188-9ba0-38f6f2272728
+		summarizeBy: none
+		sourceColumn: last_modified_date
+
+		variation Variation
+			isDefault
+			relationship: 386598eb-ab3e-44d3-875e-a5d5ceb3f8c0
+			defaultHierarchy: LocalDateTable_fcd18922-e545-4f4e-a3de-24e2a6b3f5cb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_name
+		dataType: string
+		lineageTag: 03cae380-ecbc-42e9-ba6a-c3aaed87a737
+		summarizeBy: none
+		sourceColumn: role_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent_role_id
+		dataType: string
+		lineageTag: 9a3adc49-ed48-4b29-8eae-ba1388d5ac5f
+		summarizeBy: none
+		sourceColumn: parent_role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_users = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\dbt-work\dbt_interview\CSv Files\dim_users.csv"),[Delimiter="|", Columns=27, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"user_key", type text}, {"user_id", type text}, {"user_role_id", type text}, {"manager_id", type text}, {"first_name", type text}, {"last_name", type text}, {"full_name", type text}, {"email", type text}, {"title", type text}, {"department", type text}, {"department_id", type text}, {"cost_center", type text}, {"region", type text}, {"division", type text}, {"company_name", type text}, {"alias", type text}, {"is_active", Int64.Type}, {"user_type", type text}, {"user_sub_type", type text}, {"profile_id", type text}, {"forecast_enabled", Int64.Type}, {"employee_number", type text}, {"last_login_date", type datetime}, {"created_date", type datetime}, {"last_modified_date", type datetime}, {"role_name", type text}, {"parent_role_id", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

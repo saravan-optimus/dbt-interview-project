@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "salesforce_pbi"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "92245bbf-5be0-4ba3-94b9-db0cc5988ba8"
+  }
+}

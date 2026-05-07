@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "dim_accounts",
+          "nodeLineageTag": "2acb706f-25a0-4758-a05d-1e54ad7fc300",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 303,
+            "y": 303
+          },
+          "nodeIndex": "dim_users",
+          "nodeLineageTag": "1744061c-5ef0-4776-9508-c5103fc92ba6",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 549,
+            "y": 0
+          },
+          "nodeIndex": "fct_opportunities",
+          "nodeLineageTag": "cdba689c-07c5-45f0-a6ae-61050ef669e9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1044,
+            "y": 39
+          },
+          "nodeIndex": "fct_opportunities_summary",
+          "nodeLineageTag": "e5a7413b-1825-4e99-84e1-b23fa3771d90",
+          "size": {
+            "height": 432,
+            "width": 405
+          },
+          "zIndex": 4
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

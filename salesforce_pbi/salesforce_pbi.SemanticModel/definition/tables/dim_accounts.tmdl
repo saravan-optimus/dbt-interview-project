@@ -1,0 +1,298 @@
+table dim_accounts
+	lineageTag: 2acb706f-25a0-4758-a05d-1e54ad7fc300
+
+	column account_key
+		dataType: string
+		lineageTag: 824773c5-38cc-412e-9628-ee594551a931
+		summarizeBy: none
+		sourceColumn: account_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: string
+		lineageTag: 3f5ade6d-a346-4a47-8e28-642b93c872f3
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_id
+		dataType: string
+		lineageTag: 209795fb-56bf-42ef-bf00-9d532ffb4add
+		summarizeBy: none
+		sourceColumn: owner_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent_account_id
+		dataType: string
+		lineageTag: f630f190-210c-42c3-b722-58f3a122b8b0
+		summarizeBy: none
+		sourceColumn: parent_account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_name
+		dataType: string
+		lineageTag: 9079eac0-08de-4b21-b25f-29ccbf9df1e3
+		summarizeBy: none
+		sourceColumn: account_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_type
+		dataType: string
+		lineageTag: 4589b0fc-4fe5-40d4-bdbf-68e2bf07fa9b
+		summarizeBy: none
+		sourceColumn: account_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry
+		dataType: string
+		lineageTag: 600b17da-ba02-4418-aa56-36512ad92577
+		summarizeBy: none
+		sourceColumn: industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column rating
+		dataType: string
+		lineageTag: 28b77c53-ed4b-4e31-8c1a-963a6660e35a
+		summarizeBy: none
+		sourceColumn: rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column annual_revenue
+		dataType: decimal
+		formatString: 0
+		lineageTag: b727334d-dfa1-47a9-b537-216ff0826534
+		summarizeBy: sum
+		sourceColumn: annual_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_employees
+		dataType: int64
+		formatString: 0
+		lineageTag: 01929e0e-ba32-4fd3-93e4-0681986d8f7c
+		summarizeBy: sum
+		sourceColumn: number_of_employees
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownership
+		dataType: string
+		lineageTag: 40eefe9c-ff3f-4e33-b7a6-99e5bc07bcc4
+		summarizeBy: none
+		sourceColumn: ownership
+
+		annotation SummarizationSetBy = Automatic
+
+	column billing_city
+		dataType: string
+		lineageTag: 6399975e-584a-4f24-b6da-fe92e2593ffe
+		summarizeBy: none
+		sourceColumn: billing_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column billing_state
+		dataType: string
+		lineageTag: bb252089-1254-4270-aae5-4074e293d8b3
+		summarizeBy: none
+		sourceColumn: billing_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column billing_country
+		dataType: string
+		lineageTag: 29a2ad9a-a5d0-463c-917d-525946b6c881
+		summarizeBy: none
+		sourceColumn: billing_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: ac4357c2-1ea8-4e8a-83f4-8ae285d670f2
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column website
+		dataType: string
+		lineageTag: 17c3a1cc-0520-4e0d-b62d-b73f17616d8b
+		summarizeBy: none
+		sourceColumn: website
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_source
+		dataType: string
+		lineageTag: 688aa4c3-ae15-41c1-ac19-f1f5ccaec297
+		summarizeBy: none
+		sourceColumn: account_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_priority
+		dataType: string
+		lineageTag: db493d5c-d5ef-41f3-9878-753d0c45a03d
+		summarizeBy: none
+		sourceColumn: customer_priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column sla_tier
+		dataType: string
+		lineageTag: 63f8a7cc-6cc5-46fd-a467-7979a993fef6
+		summarizeBy: none
+		sourceColumn: sla_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: string
+		lineageTag: b636b4b8-7fd5-4010-87e5-62f2591d014b
+		summarizeBy: none
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_locations
+		dataType: int64
+		formatString: 0
+		lineageTag: c8573a1c-5f35-4e69-8c73-ab71745c4299
+		summarizeBy: sum
+		sourceColumn: number_of_locations
+
+		annotation SummarizationSetBy = Automatic
+
+	column upsell_opportunity
+		dataType: string
+		lineageTag: d2495a5e-148b-4f04-b967-c0cc2887547e
+		summarizeBy: none
+		sourceColumn: upsell_opportunity
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_size_band
+		dataType: string
+		lineageTag: 7e41ff1d-f125-43a7-96f9-561e9d0a0617
+		summarizeBy: none
+		sourceColumn: company_size_band
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue_band
+		dataType: string
+		lineageTag: 48a3042f-1d8c-4bb4-8ef8-174a9acc0acf
+		summarizeBy: none
+		sourceColumn: revenue_band
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_subsidiary
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ade92bf3-2758-478e-b576-b86588655478
+		summarizeBy: none
+		sourceColumn: is_subsidiary
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_full_name
+		dataType: string
+		lineageTag: 0ce9ff1d-ac7f-4945-bb17-d777320d50d3
+		summarizeBy: none
+		sourceColumn: owner_full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_email
+		dataType: string
+		lineageTag: 89cdc825-88ea-4459-ad98-d7d225ad4075
+		summarizeBy: none
+		sourceColumn: owner_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_department
+		dataType: string
+		lineageTag: 1ee1f3e3-4e2a-4645-b2ee-aee613ac1a36
+		summarizeBy: none
+		sourceColumn: owner_department
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_is_active
+		dataType: int64
+		formatString: 0
+		lineageTag: cadf022a-8733-467d-9233-7b0ffd5d2da3
+		summarizeBy: sum
+		sourceColumn: owner_is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6a957075-4cfe-49e9-b090-50570471991b
+		summarizeBy: none
+		sourceColumn: created_date
+
+		variation Variation
+			isDefault
+			relationship: 99c78f2e-7aa2-46a7-91ce-5572e06f158d
+			defaultHierarchy: LocalDateTable_122690d8-f4fa-4dac-9c24-2a0ca2c89720.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_modified_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a118b158-70b0-4dad-ab7a-e14fb222a77e
+		summarizeBy: none
+		sourceColumn: last_modified_date
+
+		variation Variation
+			isDefault
+			relationship: 4beea8fd-3193-4336-9346-4411985cb350
+			defaultHierarchy: LocalDateTable_138a96bf-e43e-45c5-9143-661f5ddf7908.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_activity_date
+		dataType: string
+		lineageTag: 5b31bff4-27cc-49dd-bf2a-ae896e2b8e9f
+		summarizeBy: none
+		sourceColumn: last_activity_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_deleted
+		dataType: string
+		lineageTag: b49c89ba-82b1-45bc-aa84-dc368f64354f
+		summarizeBy: none
+		sourceColumn: is_deleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_accounts = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\dbt-work\dbt_interview\CSv Files\dim_accounts.csv"),[Delimiter="|", Columns=33, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"account_key", type text}, {"account_id", type text}, {"owner_id", type text}, {"parent_account_id", type text}, {"account_name", type text}, {"account_type", type text}, {"industry", type text}, {"rating", type text}, {"annual_revenue", Currency.Type}, {"number_of_employees", Int64.Type}, {"ownership", type text}, {"billing_city", type text}, {"billing_state", type text}, {"billing_country", type text}, {"phone", type text}, {"website", type text}, {"account_source", type text}, {"customer_priority", type text}, {"sla_tier", type text}, {"is_active", type text}, {"number_of_locations", Int64.Type}, {"upsell_opportunity", type text}, {"company_size_band", type text}, {"revenue_band", type text}, {"is_subsidiary", type logical}, {"owner_full_name", type text}, {"owner_email", type text}, {"owner_department", type text}, {"owner_is_active", Int64.Type}, {"created_date", type datetime}, {"last_modified_date", type datetime}, {"last_activity_date", type text}, {"is_deleted", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

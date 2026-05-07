@@ -1,0 +1,124 @@
+table fct_opportunities_summary
+	lineageTag: e5a7413b-1825-4e99-84e1-b23fa3771d90
+
+	column owner_id
+		dataType: string
+		lineageTag: 0ef9f1c7-c789-4bfd-92f0-0528c62bbbcc
+		summarizeBy: none
+		sourceColumn: owner_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_full_name
+		dataType: string
+		lineageTag: b2aba8ee-7af9-4532-9306-7ba5fae0892b
+		summarizeBy: none
+		sourceColumn: owner_full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b911927-7385-43a8-acd9-58ed1bb68ddf
+		summarizeBy: sum
+		sourceColumn: fiscal_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 20e82060-58fe-4a37-bee6-ad0d7b03b3f4
+		summarizeBy: sum
+		sourceColumn: fiscal_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_opportunities
+		dataType: int64
+		formatString: 0
+		lineageTag: 108e7abd-e7fe-48f1-8cd6-0835fea5c7f7
+		summarizeBy: sum
+		sourceColumn: total_opportunities
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_pipeline_value
+		dataType: decimal
+		formatString: 0
+		lineageTag: 31fa918d-985a-4683-8fdd-8afe07a23426
+		summarizeBy: sum
+		sourceColumn: total_pipeline_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column weighted_pipeline_value
+		dataType: decimal
+		formatString: 0
+		lineageTag: e9188c75-3e3b-4123-ae59-c5d3377e472f
+		summarizeBy: sum
+		sourceColumn: weighted_pipeline_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_probability
+		dataType: double
+		lineageTag: 571682ad-9d1d-467a-a21f-894a37bfd42d
+		summarizeBy: sum
+		sourceColumn: avg_probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column won_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 19263073-5b34-447e-ad25-ecfa40aed11a
+		summarizeBy: sum
+		sourceColumn: won_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column won_revenue
+		dataType: decimal
+		formatString: 0
+		lineageTag: 7cf4a017-645d-4e5d-b3fc-046ed4cd75bf
+		summarizeBy: sum
+		sourceColumn: won_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column lost_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 06fc8f13-3b99-40d2-8e6a-f08fd84ae43e
+		summarizeBy: sum
+		sourceColumn: lost_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column open_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 7899c75f-da64-43b8-a767-f88e9098aec5
+		summarizeBy: sum
+		sourceColumn: open_count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fct_opportunities_summary = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\dbt-work\dbt_interview\CSv Files\fct_opportunities_summary.csv"),[Delimiter="|", Columns=12, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"owner_id", type text}, {"owner_full_name", type text}, {"fiscal_year", Int64.Type}, {"fiscal_quarter", Int64.Type}, {"total_opportunities", Int64.Type}, {"total_pipeline_value", Currency.Type}, {"weighted_pipeline_value", Currency.Type}, {"avg_probability", type number}, {"won_count", Int64.Type}, {"won_revenue", Currency.Type}, {"lost_count", Int64.Type}, {"open_count", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

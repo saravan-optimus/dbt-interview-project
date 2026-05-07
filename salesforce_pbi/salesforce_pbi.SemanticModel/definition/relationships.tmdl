@@ -1,0 +1,57 @@
+relationship 99c78f2e-7aa2-46a7-91ce-5572e06f158d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_accounts.created_date
+	toColumn: LocalDateTable_122690d8-f4fa-4dac-9c24-2a0ca2c89720.Date
+
+relationship 4beea8fd-3193-4336-9346-4411985cb350
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_accounts.last_modified_date
+	toColumn: LocalDateTable_138a96bf-e43e-45c5-9143-661f5ddf7908.Date
+
+relationship 7bf496f5-f45e-4c1f-9d58-7345513c4ed5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_users.last_login_date
+	toColumn: LocalDateTable_7761abdf-9ee0-44f5-bc63-0daee85859ba.Date
+
+relationship e665e7d2-f4f1-463f-9f8b-277afa91ac5d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_users.created_date
+	toColumn: LocalDateTable_5dcc7a67-1df0-48a4-ba9c-cef12650c97d.Date
+
+relationship 386598eb-ab3e-44d3-875e-a5d5ceb3f8c0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_users.last_modified_date
+	toColumn: LocalDateTable_fcd18922-e545-4f4e-a3de-24e2a6b3f5cb.Date
+
+relationship 11016464-aef0-4c51-a0a5-0d823303dbff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_opportunities.close_date
+	toColumn: LocalDateTable_9aec3459-0052-40f2-824c-b2024537ed4f.Date
+
+relationship 65b90759-2012-47d3-bfc5-c3721b435da7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_opportunities.created_date
+	toColumn: LocalDateTable_8b33e606-960c-4808-90ae-ed07b545cbe8.Date
+
+relationship 925f105b-1fbe-4598-ba29-96896fcb1389
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_opportunities.last_modified_date
+	toColumn: LocalDateTable_31fc59a3-28c7-488d-8223-1c002c109aee.Date
+
+relationship f416b7a4-54c0-4837-9467-2a730f0a5b7d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fct_opportunities.last_stage_change_date
+	toColumn: LocalDateTable_27339e65-a37d-43ac-b5c2-a34c4907880a.Date
+
+relationship fct_opportunities_to_dim_accounts
+	fromColumn: fct_opportunities.account_id
+	toColumn: dim_accounts.account_id
+
+relationship fct_opportunities_to_dim_users
+	fromColumn: fct_opportunities.owner_id
+	toColumn: dim_users.user_id
+
+relationship fct_opportunities_summary_to_dim_users
+	fromColumn: fct_opportunities_summary.owner_id
+	toColumn: dim_users.user_id
+

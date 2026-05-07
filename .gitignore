@@ -158,3 +158,13 @@ dmypy.json
 dbt_learn_browse.duckdb
 PROJECT_PROGRESS.md
 transformation/.user.yml
+# Power BI local settings (machine-specific, contains security bindings)
+salesforce_pbi/salesforce_pbi.SemanticModel/.pbi/localSettings.json
+salesforce_pbi/salesforce_pbi.SemanticModel/.pbi/editorSettings.json
+
+# VS Code workspace config (local machine setup)
+*.code-workspace
+transformation/tests/dbt_interview.code-workspace
+
+# Power BI Report local settings
+salesforce_pbi/salesforce_pbi.Report/.pbi/localSettings.json
