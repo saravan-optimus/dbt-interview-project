@@ -1,7 +1,7 @@
 # Salesforce Semantic Model — Generation Summary
 
 **Date Generated:** May 7, 2026  
-**Method:** Power BI MCP (Model Control Plane) + LLM  
+**Method:** Power BI MCP + Claude LLM  
 **Status:** ✓ Complete and Committed
 
 ---
@@ -12,7 +12,12 @@ Salesforce CRM semantic model built locally as a proof of concept using Power BI
 
 This demonstrates end-to-end workflow orchestration:
 
+**#PATH
+dbt-interview-project/tree/main/salesforce_pbi
+dbt-interview-project/tree/main/Sceenshots  -- this containes te screnn shots of MCP Usage and PBI 
 
+
+**
 ---
 
 ## Tables Created (4)
@@ -147,7 +152,9 @@ salesforce_pbi/salesforce_pbi.SemanticModel/
 └── salesforce_pbi.pbip                      # ✓ Project structure
 
 
-Production Deployment Workflow
+
+
+**Production Deployment Workflow**
 This POC demonstrates how to automate semantic model creation in production:
 
 Airflow DAG:
